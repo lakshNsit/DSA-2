@@ -1,0 +1,64 @@
+// #include<bits/stdc++.h>
+#include<iostream>
+#include<algorithm>
+#include<string>
+#include<string.h>
+#include<cmath>
+#include<iomanip>
+#include<set>
+#include<list>
+#include<forward_list>
+#include<stack>
+#include<vector>
+#define ll long long
+#define ff first
+#define ss second
+#define pii pair<int, int>
+using namespace std;
+// letter chooses box approacha
+void solve(int i, int j, int k, string s, char * op, unordered_amap<char, bool> map)
+{
+	if (i == s.size())
+	{
+		if (j == k)
+		{
+			op[j] = '\0';
+			cout << op << endl;
+		}
+		return;
+	}
+	for (int x = 0; x < k; x++)
+	{
+		if (map[s[i]] == 0 and op[x] == '\0')
+		{
+			map[s[i]] = true;
+			op[x] = s[i];
+			solve(i + 1, j + 1, k, s, op, map);
+			map[s[i]] = false;
+			op[x] = '\0';
+		}
+	}
+	solve(i + 1, j, k, s, op, map);
+
+}
+
+int main()
+{
+	string s;
+	int k;
+	cin >> s >> k;
+	unordered_map<char, int> freq;
+	string x;
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (freq[s[i]] == 0)
+		{
+			x += s[i];
+		}
+		freq[s[i]]++;
+	}
+	char *op = new char[20] {'\0'};
+	unordered_map<char, bool> map;
+	solve(0, 0, k, x, op, map);
+	return 0;
+}
